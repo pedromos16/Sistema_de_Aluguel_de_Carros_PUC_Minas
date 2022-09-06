@@ -1,4 +1,4 @@
-​| Historias de usuário  |
+| Historias de usuário  |
 | --------------------- |
 |Como usuario do sistema (cliente) posso consultar meu pedido de aluguel para saber quanto terei que pagar no final do mês.|
 |Como agente (empresas e bancos) devo analisar os pedidos do ponto de vista financeiro para saber se vale a pena alugar o imóvel para um determinado cliente.|
