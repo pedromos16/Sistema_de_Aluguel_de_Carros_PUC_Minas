@@ -1,7 +1,9 @@
 | Historias de usuário  |
 | --------------------- |
-|Como usuario do sistema (cliente) posso consultar meu pedido de aluguel para saber quanto terei que pagar no final do mês.|
-|Como agente (empresas e bancos) devo analisar os pedidos do ponto de vista financeiro para saber se vale a pena alugar o imóvel para um determinado cliente.|
-|Como agente (empresas e bancos) devo colocar minha consideração no contrato no caso de uma análise positiva para a execução do contrato.|
-|Como contratante devo fornecer meus dados pessoais para alugar o imóvel.|
-|Como agente (empresas e bancos) posso associar um automóvel com um contrato de crédito para que o cliente possa usar o mesmo.|
+|Como cliente, quero introduzir, modificar e cancelar pedidos de aluguel.|
+|Como agente, devo analisar os pedidos do ponto de vista financeiro para retornar um parecer a um determinado cliente.|
+|Como agente, quero modificar e avaliar pedidos.|
+|Como cliente, devo fornecer meus dados pessoais para alugar um automóvel.|
+|Como agente, posso associar um contrato de crédito a um aluguel.|
+|Como cliente, quero acessar o sistema por meio da internet.|
+|Como agente, quero acessar o sistema por meio da internet.|
