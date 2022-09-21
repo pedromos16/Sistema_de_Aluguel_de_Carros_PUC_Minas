@@ -22,10 +22,12 @@ public class PedidoAluguel implements Serializable {
 
     @Column
     private Double preco;
-    @ElementCollection
+    @ElementCollection //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     @CollectionTable(name="automoveis", joinColumns = @JoinColumn(name = "Pedido_ID"))
     @Column(name = "auto_NO")
     private List<Automovel> automovelList;
+
+    public PedidoAluguel(){}
 
     public PedidoAluguel(String observacao, Double preco, Cliente cliente, List<Automovel> automovelList) {
         this.observacao = observacao;

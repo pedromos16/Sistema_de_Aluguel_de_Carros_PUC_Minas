@@ -1,6 +1,7 @@
 package com.sac.demo.controller;
 
 import com.sac.demo.DTO.AgenteDTO;
+import com.sac.demo.DTO.AgentePDTO;
 import com.sac.demo.model.Agente;
 import com.sac.demo.repository.AgenteRepository;
 import com.sac.demo.service.AgenteService;
@@ -24,7 +25,7 @@ public class AgenteController {
     private AgenteService service;
 
     @PostMapping
-    public ResponseEntity<Void> insert(@RequestBody AgenteDTO objDTO){
+    public ResponseEntity<Void> insert(@RequestBody AgentePDTO objDTO){
         Agente obj = service.fromDTO(objDTO);
         obj = service.insert(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
@@ -38,11 +39,10 @@ public class AgenteController {
     }
 
     @PutMapping(value="/{id}")
-    public ResponseEntity<Void> update(@RequestBody AgenteDTO objDTO, @PathVariable Integer id){
+    public ResponseEntity<Void> update(@RequestBody AgentePDTO objDTO, @PathVariable Integer id){
         Agente obj = service.fromDTO(objDTO);
         obj.setId(id);
         obj = service.update(obj);
-
         return ResponseEntity.noContent().build();
     }
 

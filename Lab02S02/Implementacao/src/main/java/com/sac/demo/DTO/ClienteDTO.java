@@ -26,6 +26,10 @@ public class ClienteDTO implements Serializable {
 
     List<PedidoAluguel> pedidoAluguelList;
 
+    private Integer agenteId;
+
+    public ClienteDTO(){}
+
     public ClienteDTO(Cliente obj){
         this.id = obj.getId();
         this.rg = obj.getRg();
@@ -37,6 +41,15 @@ public class ClienteDTO implements Serializable {
         this.profissao = obj.getProfissao();
         this.entidadeEmpregadora = obj.getEntidadeEmpregadora();
         this.rendimento = obj.getRendimento();
+        this.agenteId = obj.getAgente().getId();
+    }
+
+    public Integer getAgenteId() {
+        return agenteId;
+    }
+
+    public void setAgenteId(Integer agenteId) {
+        this.agenteId = agenteId;
     }
 
     public Integer getId() {
@@ -109,6 +122,14 @@ public class ClienteDTO implements Serializable {
 
     public void setRendimento(String rendimento) {
         this.rendimento = rendimento;
+    }
+
+    public List<PedidoAluguel> getPedidoAluguelList() {
+        return pedidoAluguelList;
+    }
+
+    public void setPedidoAluguelList(List<PedidoAluguel> pedidoAluguelList) {
+        this.pedidoAluguelList = pedidoAluguelList;
     }
 
     @Override

@@ -14,18 +14,32 @@ public class AgentePDTO implements Serializable {
 
     private Integer id;
 
+    @NotEmpty
+    @Size(min = 5, max = 15, message = "Tamanho minimo: 5 caracteres")
     private String usuario;
 
-    private List<Cliente> clienteList;
+    @NotEmpty
+    @Size(min = 5, max = 15, message = "Tamanho minimo: 5 caracteres")
+    private String senha;
 
     private String obsAvaliacao;
 
+    public AgentePDTO(){}
 
     public AgentePDTO(Agente obj){
         this.id = obj.getId();
         this.usuario = obj.getUsuario();
-        this.clienteList = obj.getClienteList();
         this.obsAvaliacao = obj.getObsAvaliacao();
+        this.usuario = obj.getUsuario();
+        this.senha = obj.getSenha();
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
     public Integer getId() {
@@ -42,14 +56,6 @@ public class AgentePDTO implements Serializable {
 
     public void setUsuario(String usuario) {
         this.usuario = usuario;
-    }
-
-    public List<Cliente> getClienteList() {
-        return clienteList;
-    }
-
-    public void setClienteList(List<Cliente> clienteList) {
-        this.clienteList = clienteList;
     }
 
     public String getObsAvaliacao() {

@@ -1,10 +1,12 @@
 package com.sac.demo.DTO;
 
 import com.sac.demo.model.Agente;
+import com.sac.demo.model.Cliente;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 public class AgenteDTO implements Serializable {
@@ -12,18 +14,20 @@ public class AgenteDTO implements Serializable {
 
     private Integer id;
 
-    @NotEmpty
-    @Size(min = 5, max = 15, message = "Tamanho minimo: 5 caracteres")
     private String usuario;
 
-    @NotEmpty
-    @Size(min = 5, max = 15, message = "Tamanho minimo: 5 caracteres")
-    private String senha;
+    private List<Cliente> clienteList;
+
+    private String obsAvaliacao;
+
+    public AgenteDTO(){}
 
     public AgenteDTO(Agente obj){
         this.id = obj.getId();
         this.usuario = obj.getUsuario();
-        this.senha = obj.getSenha();
+        this.clienteList = obj.getClienteList();
+        this.obsAvaliacao = obj.getObsAvaliacao();
+        this.usuario = obj.getUsuario();
     }
 
     public Integer getId() {
@@ -42,12 +46,20 @@ public class AgenteDTO implements Serializable {
         this.usuario = usuario;
     }
 
-    public String getSenha() {
-        return senha;
+    public List<Cliente> getClienteList() {
+        return clienteList;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setClienteList(List<Cliente> clienteList) {
+        this.clienteList = clienteList;
+    }
+
+    public String getObsAvaliacao() {
+        return obsAvaliacao;
+    }
+
+    public void setObsAvaliacao(String obsAvaliacao) {
+        this.obsAvaliacao = obsAvaliacao;
     }
 
     @Override

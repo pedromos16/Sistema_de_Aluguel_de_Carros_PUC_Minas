@@ -1,10 +1,8 @@
 package com.sac.demo.service;
 
-import com.sac.demo.DTO.AgenteDTO;
-import com.sac.demo.DTO.ClienteDTO;
 import com.sac.demo.DTO.ClientePDTO;
+import com.sac.demo.model.Agente;
 import com.sac.demo.model.Cliente;
-import com.sac.demo.repository.AgenteRepository;
 import com.sac.demo.repository.ClienteRepository;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +17,9 @@ public class ClienteService {
 
     @Autowired
     private ClienteRepository repo;
+
+    @Autowired
+    private AgenteService agenteService;
 
     public Cliente find(Integer id){
         Optional<Cliente> obj = repo.findById(id);
@@ -42,7 +43,7 @@ public class ClienteService {
         try{
             repo.deleteById(id);
         }catch(Exception e){
-            throw new Exception("Não foi possivel excluir o agente");
+            throw new Exception("Não foi possivel excluir o cliente");
         }
     }
 
@@ -53,7 +54,12 @@ public class ClienteService {
     }
 
     public Cliente fromDTO(ClientePDTO objDTO){
-        return new Cliente(objDTO.getId(), objDTO.getUsuario(), objDTO.getSenha(), objDTO.getRg(), objDTO.getCpf(), objDTO.getNome(),objDTO.getEndereco(),objDTO.getProfissao(),objDTO.getEntidadeEmpregadora(),objDTO.getRendimento());
+        Cliente cliente = new Cliente(objDTO.getId(), objDTO.getUsuario(), objDTO.getSenha(), objDTO.getRg(), objDTO.getCpf(), objDTO.getNome(),objDTO.getEndereco(),objDTO.getProfissao(),objDTO.getEntidadeEmpregadora(),objDTO.getRendimento());
+        if(objDTO.getAgenteId() != null){
+            Agente agente = agenteService.find(objDTO.getAgenteId());
+            cliente.setAgente(agente);
+        }
+        return cliente;
     }
 
     private void updateData(Cliente newObj, Cliente obj){
@@ -66,5 +72,6 @@ public class ClienteService {
         newObj.setRg(obj.getRg());
         newObj.setEntidadeEmpregadora(obj.getEntidadeEmpregadora());
         newObj.setProfissao(obj.getProfissao());
+        newObj.setRendimento(obj.getRendimento());
     }
 }

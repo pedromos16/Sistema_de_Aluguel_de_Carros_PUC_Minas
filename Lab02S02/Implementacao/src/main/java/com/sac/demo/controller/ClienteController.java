@@ -27,9 +27,13 @@ public class ClienteController {
     @Autowired
     private ClienteService service;
 
+    @Autowired
+    private AgenteService agenteService;
+
     @PostMapping
     public ResponseEntity<Void> insert(@RequestBody ClientePDTO objDTO){
         Cliente obj = service.fromDTO(objDTO);
+        obj.setUsuario(objDTO.getUsuario());
         obj = service.insert(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).build();
@@ -45,6 +49,7 @@ public class ClienteController {
     public ResponseEntity<Void> update(@RequestBody ClientePDTO objDTO, @PathVariable Integer id){
         Cliente obj = service.fromDTO(objDTO);
         obj.setId(id);
+        obj.setAgente(agenteService.find(objDTO.getAgenteId()));
         obj = service.update(obj);
 
         return ResponseEntity.noContent().build();

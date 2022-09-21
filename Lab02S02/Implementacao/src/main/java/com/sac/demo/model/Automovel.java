@@ -32,6 +32,8 @@ public class Automovel implements Serializable {
         this.placa = placa;
     }
 
+    public Automovel(){}
+
     public String getMatricula() {
         return matricula;
     }

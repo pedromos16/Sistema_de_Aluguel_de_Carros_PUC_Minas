@@ -27,6 +27,9 @@ public class ClientePDTO implements Serializable {
     private String profissao;
     private String entidadeEmpregadora;
     private String rendimento;
+    private Integer agenteId;
+
+    public ClientePDTO(){}
 
     public ClientePDTO(Cliente obj){
         this.id = obj.getId();
@@ -39,6 +42,14 @@ public class ClientePDTO implements Serializable {
         this.profissao = obj.getProfissao();
         this.entidadeEmpregadora = obj.getEntidadeEmpregadora();
         this.rendimento = obj.getRendimento();
+    }
+
+    public Integer getAgenteId() {
+        return agenteId;
+    }
+
+    public void setAgenteId(Integer agenteId) {
+        this.agenteId = agenteId;
     }
 
     public Integer getId() {

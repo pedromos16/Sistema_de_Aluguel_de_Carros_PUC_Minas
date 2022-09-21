@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class Cliente extends Usuario implements Serializable {
+public class Cliente implements Serializable {
     public static final long serialVersionUID = 371231283L;
 
     @Id
@@ -16,7 +16,14 @@ public class Cliente extends Usuario implements Serializable {
     @OneToMany(mappedBy = "cliente")
     private List<PedidoAluguel> pedidoAluguelList;
 
+    @Column
+    private String usuario;
+
+    @Column
+    private String senha;
+
     @ManyToOne
+    @JoinColumn(name="ag_id")
     private Agente agente;
     @Column
     private String rg;
@@ -34,14 +41,14 @@ public class Cliente extends Usuario implements Serializable {
     private String rendimento;
 
 
-    public Cliente(String usuario, String senha){
-        super(usuario, senha);
+    public Cliente(){
     }
 
     public Cliente(String usuario, String senha, String rg, String cpf,
                    String nome, String endereco, String profissao,
                    String entidadeEmpregadora, String rendimento) {
-        super(usuario, senha);
+        this.usuario = usuario;
+        this.senha = senha;
         this.id = null;
         this.rg = rg;
         this.cpf = cpf;
@@ -52,11 +59,11 @@ public class Cliente extends Usuario implements Serializable {
         this.rendimento = rendimento;
     }
 
-
     public Cliente(Integer id, String usuario, String senha, String rg, String cpf,
                    String nome, String endereco, String profissao,
                    String entidadeEmpregadora, String rendimento) {
-        super(usuario, senha);
+        this.usuario = usuario;
+        this.senha = senha;
         this.id = id;
         this.rg = rg;
         this.cpf = cpf;
@@ -65,6 +72,22 @@ public class Cliente extends Usuario implements Serializable {
         this.profissao = profissao;
         this.entidadeEmpregadora = entidadeEmpregadora;
         this.rendimento = rendimento;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
     public Agente getAgente() {
