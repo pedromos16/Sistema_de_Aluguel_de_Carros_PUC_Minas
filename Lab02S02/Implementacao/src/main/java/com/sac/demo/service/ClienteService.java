@@ -1,6 +1,6 @@
 package com.sac.demo.service;
 
-import com.sac.demo.DTO.ClientePDTO;
+import com.sac.demo.DTO.Response.ClienteResponseDTO;
 import com.sac.demo.model.Agente;
 import com.sac.demo.model.Cliente;
 import com.sac.demo.repository.ClienteRepository;
@@ -53,15 +53,6 @@ public class ClienteService {
         return repo.save(newObj);
     }
 
-    public Cliente fromDTO(ClientePDTO objDTO){
-        Cliente cliente = new Cliente(objDTO.getId(), objDTO.getUsuario(), objDTO.getSenha(), objDTO.getRg(), objDTO.getCpf(), objDTO.getNome(),objDTO.getEndereco(),objDTO.getProfissao(),objDTO.getEntidadeEmpregadora(),objDTO.getRendimento());
-        if(objDTO.getAgenteId() != null){
-            Agente agente = agenteService.find(objDTO.getAgenteId());
-            cliente.setAgente(agente);
-        }
-        return cliente;
-    }
-
     private void updateData(Cliente newObj, Cliente obj){
         newObj.setId(obj.getId());
         newObj.setUsuario(obj.getUsuario());
@@ -72,6 +63,7 @@ public class ClienteService {
         newObj.setRg(obj.getRg());
         newObj.setEntidadeEmpregadora(obj.getEntidadeEmpregadora());
         newObj.setProfissao(obj.getProfissao());
-        newObj.setRendimento(obj.getRendimento());
+        newObj.setRendimentos(obj.getRendimentos());
+        newObj.setAgente(obj.getAgente());
     }
 }

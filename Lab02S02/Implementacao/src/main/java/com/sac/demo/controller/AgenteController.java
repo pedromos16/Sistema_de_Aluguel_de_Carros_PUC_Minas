@@ -1,7 +1,7 @@
 package com.sac.demo.controller;
 
-import com.sac.demo.DTO.AgenteDTO;
-import com.sac.demo.DTO.AgentePDTO;
+import com.sac.demo.DTO.Response.AgenteResponseDTO;
+import com.sac.demo.DTO.Request.AgenteRequestDTO;
 import com.sac.demo.model.Agente;
 import com.sac.demo.repository.AgenteRepository;
 import com.sac.demo.service.AgenteService;
@@ -25,22 +25,23 @@ public class AgenteController {
     private AgenteService service;
 
     @PostMapping
-    public ResponseEntity<Void> insert(@RequestBody AgentePDTO objDTO){
-        Agente obj = service.fromDTO(objDTO);
+    public ResponseEntity<Void> insert(@RequestBody AgenteRequestDTO objDTO){
+        Agente obj = objDTO.build();
         obj = service.insert(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 
     @GetMapping(value="/{id}")
-    public ResponseEntity<Agente> find(@PathVariable Integer id){
+    public ResponseEntity<AgenteResponseDTO> find(@PathVariable Integer id){
         Agente obj = service.find(id);
-        return ResponseEntity.ok().body(obj);
+        AgenteResponseDTO objDTO = new AgenteResponseDTO(obj);
+        return ResponseEntity.ok().body(objDTO);
     }
 
     @PutMapping(value="/{id}")
-    public ResponseEntity<Void> update(@RequestBody AgentePDTO objDTO, @PathVariable Integer id){
-        Agente obj = service.fromDTO(objDTO);
+    public ResponseEntity<Void> update(@RequestBody AgenteRequestDTO objDTO, @PathVariable Integer id){
+        Agente obj = objDTO.build();
         obj.setId(id);
         obj = service.update(obj);
         return ResponseEntity.noContent().build();
@@ -53,9 +54,9 @@ public class AgenteController {
     }
 
     @GetMapping
-    public ResponseEntity<List<AgenteDTO>> findAll(){
+    public ResponseEntity<List<AgenteResponseDTO>> findAll(){
         List<Agente> objList = service.findAll();
-        List<AgenteDTO> objListDTO = objList.stream().map(AgenteDTO::new).collect(Collectors.toList());
+        List<AgenteResponseDTO> objListDTO = objList.stream().map(AgenteResponseDTO::new).collect(Collectors.toList());
 
         return ResponseEntity.ok().body(objListDTO);
     }

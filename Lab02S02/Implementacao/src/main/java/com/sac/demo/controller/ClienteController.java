@@ -1,8 +1,8 @@
 package com.sac.demo.controller;
 
-import com.sac.demo.DTO.AgenteDTO;
-import com.sac.demo.DTO.ClienteDTO;
-import com.sac.demo.DTO.ClientePDTO;
+import com.sac.demo.DTO.Request.ClienteRequestDTO;
+import com.sac.demo.DTO.Response.AgenteResponseDTO;
+import com.sac.demo.DTO.Response.ClienteResponseDTO;
 import com.sac.demo.model.Agente;
 import com.sac.demo.model.Cliente;
 import com.sac.demo.repository.AgenteRepository;
@@ -22,34 +22,40 @@ import java.util.stream.Collectors;
 public class ClienteController {
 
     @Autowired
-    private AgenteRepository repository;
-
-    @Autowired
     private ClienteService service;
 
     @Autowired
     private AgenteService agenteService;
 
     @PostMapping
-    public ResponseEntity<Void> insert(@RequestBody ClientePDTO objDTO){
-        Cliente obj = service.fromDTO(objDTO);
-        obj.setUsuario(objDTO.getUsuario());
+    public ResponseEntity<Void> insert(@RequestBody ClienteRequestDTO objDTO){
+        Agente agente;
+        Cliente obj = objDTO.build();
+        if(objDTO.getAgente() != null){
+            agente = agenteService.find(objDTO.getAgente().getId());
+            obj.setAgente(agente);
+        }
         obj = service.insert(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 
     @GetMapping(value="/{id}")
-    public ResponseEntity<Cliente> find(@PathVariable Integer id){
+    public ResponseEntity<ClienteResponseDTO> find(@PathVariable Integer id){
         Cliente obj = service.find(id);
-        return ResponseEntity.ok().body(obj);
+        ClienteResponseDTO objDTO = new ClienteResponseDTO(obj);
+        return ResponseEntity.ok().body(objDTO);
     }
 
     @PutMapping(value="/{id}")
-    public ResponseEntity<Void> update(@RequestBody ClientePDTO objDTO, @PathVariable Integer id){
-        Cliente obj = service.fromDTO(objDTO);
+    public ResponseEntity<Void> update(@RequestBody ClienteRequestDTO objDTO, @PathVariable Integer id){
+        Cliente obj = objDTO.build();
         obj.setId(id);
-        obj.setAgente(agenteService.find(objDTO.getAgenteId()));
+        Agente agente;
+        if(objDTO.getAgente() != null){
+            agente = agenteService.find(objDTO.getAgente().getId());
+            obj.setAgente(agente);
+        }
         obj = service.update(obj);
 
         return ResponseEntity.noContent().build();
@@ -62,10 +68,9 @@ public class ClienteController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ClienteDTO>> findAll(){
+    public ResponseEntity<List<ClienteResponseDTO>> findAll(){
         List<Cliente> objList = service.findAll();
-        List<ClienteDTO> objListDTO = objList.stream().map(ClienteDTO::new).collect(Collectors.toList());
-
+        List<ClienteResponseDTO> objListDTO = objList.stream().map(ClienteResponseDTO::new).collect(Collectors.toList());
         return ResponseEntity.ok().body(objListDTO);
     }
 

@@ -1,9 +1,7 @@
 package com.sac.demo.service;
 
-import com.sac.demo.DTO.AgenteDTO;
-import com.sac.demo.DTO.AgentePDTO;
+import com.sac.demo.DTO.Request.AgenteRequestDTO;
 import com.sac.demo.model.Agente;
-import com.sac.demo.model.Cliente;
 import com.sac.demo.repository.AgenteRepository;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,10 +48,6 @@ public class AgenteService {
         Agente newObj = find(obj.getId());
         updateData(newObj, obj);
         return repo.save(newObj);
-    }
-
-    public Agente fromDTO(AgentePDTO objDTO){
-        return new Agente(objDTO.getId(), objDTO.getUsuario(), objDTO.getSenha(), objDTO.getObsAvaliacao());
     }
 
     private void updateData(Agente newObj, Agente obj){
