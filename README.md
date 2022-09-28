@@ -7,21 +7,3 @@
 |Como agente, posso associar um contrato de crédito a um aluguel.|
 |Como cliente, quero acessar o sistema por meio da internet.|
 |Como agente, quero acessar o sistema por meio da internet.|
-
-
-nao precisa expandir o "informar dados"
-nao pode existir com mesmo nome
-
-excluir o gerenciar pedidos
-
-generalizar o registrar dados
-
-agente n é secundarui do associado com um contrato de ...
-
-banco gera contrato 
-
-fazer fronteira
--------------------------------
-
-pacotes: adicionar ate o nivel de classe
--------------------------------
