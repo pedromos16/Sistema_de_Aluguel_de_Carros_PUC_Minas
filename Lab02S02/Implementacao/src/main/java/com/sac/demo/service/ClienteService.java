@@ -1,7 +1,6 @@
 package com.sac.demo.service;
 
-import com.sac.demo.DTO.Response.ClienteResponseDTO;
-import com.sac.demo.model.Agente;
+
 import com.sac.demo.model.Cliente;
 import com.sac.demo.repository.ClienteRepository;
 import org.hibernate.ObjectNotFoundException;
@@ -18,8 +17,6 @@ public class ClienteService {
     @Autowired
     private ClienteRepository repo;
 
-    @Autowired
-    private AgenteService agenteService;
 
     public Cliente find(Integer id){
         Optional<Cliente> obj = repo.findById(id);

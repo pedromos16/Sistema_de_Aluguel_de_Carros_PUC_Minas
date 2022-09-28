@@ -2,6 +2,7 @@ package com.sac.demo.service;
 
 import com.sac.demo.DTO.Request.AgenteRequestDTO;
 import com.sac.demo.model.Agente;
+import com.sac.demo.model.Cliente;
 import com.sac.demo.repository.AgenteRepository;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,7 @@ public class AgenteService {
         newObj.setUsuario(obj.getUsuario());
         newObj.setSenha(obj.getSenha());
         newObj.setId(obj.getId());
+        newObj.setClienteList(obj.getClienteList());
         newObj.setClienteList(obj.getClienteList());
         newObj.setObsAvaliacao(obj.getObsAvaliacao());
     }

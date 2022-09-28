@@ -28,6 +28,6 @@ public class Agente extends Usuario implements Serializable {
 
     @OneToMany(mappedBy = "agente")
     @JsonIgnoreProperties("agente")
-    //@JsonIgnore
+    @Column
     private Set<Cliente> clienteList;
 }

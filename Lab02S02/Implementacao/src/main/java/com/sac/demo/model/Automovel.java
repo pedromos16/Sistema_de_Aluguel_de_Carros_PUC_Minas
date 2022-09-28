@@ -1,5 +1,6 @@
 package com.sac.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,5 +30,12 @@ public class Automovel implements Serializable {
     private String modelo;
     @Column
     private String placa;
+    @Column
+    private Double preco;
+
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinColumn(name = "pedidoAluguel_id")
+    @JsonIgnore
+    private PedidoAluguel pedidoAluguel;
 
 }

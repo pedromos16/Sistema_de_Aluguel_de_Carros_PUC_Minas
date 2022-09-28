@@ -3,8 +3,10 @@ package com.sac.demo.controller;
 import com.sac.demo.DTO.Response.AgenteResponseDTO;
 import com.sac.demo.DTO.Request.AgenteRequestDTO;
 import com.sac.demo.model.Agente;
+import com.sac.demo.model.Cliente;
 import com.sac.demo.repository.AgenteRepository;
 import com.sac.demo.service.AgenteService;
+import com.sac.demo.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,16 +19,21 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping(value="/agentes")
 public class AgenteController {
-
-    @Autowired
-    private AgenteRepository repository;
-
     @Autowired
     private AgenteService service;
+
+    @Autowired
+    private ClienteService clienteService;
 
     @PostMapping
     public ResponseEntity<Void> insert(@RequestBody AgenteRequestDTO objDTO){
         Agente obj = objDTO.build();
+        if(objDTO.getClients() != null){
+            for(Cliente cli : obj.getClienteList()){
+                Cliente cliente = clienteService.find(cli.getId());
+                obj.getClienteList().add(cliente);
+            }
+        }
         obj = service.insert(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).build();
@@ -43,6 +50,12 @@ public class AgenteController {
     public ResponseEntity<Void> update(@RequestBody AgenteRequestDTO objDTO, @PathVariable Integer id){
         Agente obj = objDTO.build();
         obj.setId(id);
+        if(objDTO.getClients() != null){
+            for(Cliente cli : obj.getClienteList()){
+                Cliente cliente = clienteService.find(cli.getId());
+                obj.getClienteList().add(cliente);
+            }
+        }
         obj = service.update(obj);
         return ResponseEntity.noContent().build();
     }

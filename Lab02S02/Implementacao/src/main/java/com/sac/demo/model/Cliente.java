@@ -1,11 +1,13 @@
 package com.sac.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -21,11 +23,12 @@ public class Cliente extends Usuario implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToMany(mappedBy = "cliente")
-    private Set<PedidoAluguel> pedidoAluguelList;
+    @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    private Set<PedidoAluguel> pedidoAluguelList = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne(targetEntity = Agente.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name="ag_id")
+    @JsonIgnoreProperties
     private Agente agente;
     @Column
     private String rg;
@@ -41,5 +44,9 @@ public class Cliente extends Usuario implements Serializable {
     private String entidadeEmpregadora;
     @Column
     private String rendimentos;
+
+    public void addNewPedidoAluguel(PedidoAluguel obj){
+        pedidoAluguelList.add(obj);
+    }
 
 }

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,7 +21,7 @@ public class PedidoAluguel implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name="cliente_id")
     private Cliente cliente;
 
@@ -30,7 +31,7 @@ public class PedidoAluguel implements Serializable {
     @Column
     private Double preco;
 
-
-    private List<Automovel> automovelList;
+    @OneToMany(mappedBy = "pedidoAluguel", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    private List<Automovel> automovelList = new ArrayList<>();
 
 }
